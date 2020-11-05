@@ -10,7 +10,7 @@ app.set('trust proxy', 1);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(logger("dev"));
+app.use(logger("common"));
 
 
 const PORT = process.env.PORT;
