@@ -1,4 +1,5 @@
 const firestore = require('../database');
+const errorres = require('../utils/errorres');
 
 const contactUsColl = firestore.db.collection('contactUs');
 
@@ -20,8 +21,9 @@ exports.contactUs = (req, res) => {
     })
     .catch((err) => {
       if (err) {
-        res.statusCode = 500;
-        res.send({ message: 'Something went wrong' });
+        return res(new errorres(`Something went wrong`, 500));
+        // res.statusCode = 500;
+        // res.send({ message: 'Something went wrong' });
       }
     });
 };

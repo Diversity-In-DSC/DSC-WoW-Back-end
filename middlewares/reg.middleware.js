@@ -8,9 +8,9 @@ exports.checkRegistered = async (req, res, next) => {
     .get();
 
   if (!userDoc.empty) {
-    res.statusCode = 406;
-    res.send({ message: 'User already present' });
-    return;
+    return res(new errorres(`User already regestered`, 406));
+    // res.statusCode = 406;
+    // res.send({ message: 'User already present' });
   }
 
   next();

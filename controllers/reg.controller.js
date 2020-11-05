@@ -18,8 +18,26 @@ exports.register = (req, res) => {
     })
     .catch((err) => {
       if (err) {
-        res.statusCode = 500;
-        res.send({ message: 'Something went wrong' });
+        return res(new errorres(`Something went wrong`, 500));
+        // res.statusCode = 500;
+        // res.send({ message: 'Something went wrong' });
       }
     });
 };
+
+// Async example
+// exports.register = async (req, res) => {
+//   try {
+//     const userRegisterRef = userCollection.doc();
+
+//     const stat = await userRegisterRef.set({
+//       username: req.body.username,
+//       email: req.body.email,
+//       createAt: Date.now(),
+//     });
+
+//     res.send({ message: 'User Registered Successfully' });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
