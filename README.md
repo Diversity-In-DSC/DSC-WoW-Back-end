@@ -1,6 +1,7 @@
 # DSC WoW - Backend
 
 ### Getting Started
+
 ```bash
 git clone https://github.com/Diversity-In-DSC/DSC-WoW-Backend.git
 
@@ -14,18 +15,21 @@ npm start
 
 ### Public APIs
 
-1. api/user/register  
+1. api/user/register
 
 Content-Type: application/json
+
 ```
 {
   "username": "test",
   "email": "test@test.com",
 }
 ```
-2. api/contactus  
+
+2. api/contactus
 
 Content-Type: application/json
+
 ```
 {
   "username": "test",
@@ -36,4 +40,5 @@ Content-Type: application/json
 ```
 
 ### Requirements
-1. ```config.json``` in project root directory : firebase service account
+
+1. `config.json` in project root directory : firebase service account
