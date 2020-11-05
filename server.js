@@ -17,7 +17,7 @@ const PORT = process.env.PORT;
 
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 3,
+    max: 100,
     message: {message: "We dont allow too many requests from same IP."}
 });
 
