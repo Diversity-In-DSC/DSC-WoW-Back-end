@@ -1,4 +1,5 @@
 const firestore = require('../database');
+const sendMail = require('../utils/sendMail');
 
 const userCollection = firestore.db.collection('users');
 
@@ -13,7 +14,23 @@ exports.register = (req, res) => {
     })
     .then((dbRes) => {
       if (dbRes) {
-        res.send({ message: 'User Registered Successfully' });
+        
+      try {
+        await sendMail({
+          email: `test@gmail.com`,
+          subject: `Regetration Success`,
+          message: `You have successfully regesteredfor DSC-Wow`,
+        });
+
+        res.status(200).json({message: 'User Registered Successfully please check for mail'});
+      
+      } catch (error) {
+        next(error);
+      }
+
+        // res.send({
+        //   message: 'User Registered Successfully please check for mail',
+        // });
       }
     })
     .catch((err) => {
