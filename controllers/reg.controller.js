@@ -3,7 +3,7 @@ const sendMail = require('../utils/sendMail');
 
 const userCollection = firestore.db.collection('users');
 
-exports.register = (req, res) => {
+exports.register = async (req, res) => {
   const userRegisterRef = userCollection.doc();
 
   userRegisterRef
