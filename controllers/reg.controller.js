@@ -3,7 +3,7 @@ const sendMail = require('../utils/sendMail');
 
 const userCollection = firestore.db.collection('users');
 
-exports.register = async (req, res) => {
+exports.register = (req, res) => {
   const userRegisterRef = userCollection.doc();
 
   userRegisterRef
@@ -16,11 +16,15 @@ exports.register = async (req, res) => {
       if (dbRes) {
         
       try {
-        await sendMail({
+        sendMail({
           email: `test@gmail.com`,
           subject: `Regetration Success`,
           message: `You have successfully regesteredfor DSC-Wow`,
-        });
+        }).then().catch(err => {if(err){res
+          .status(500)
+          .json({
+            message: 'Mail api problem detected',
+          });}});
 
         res.status(200).json({message: 'User Registered Successfully please check for mail'});
       
