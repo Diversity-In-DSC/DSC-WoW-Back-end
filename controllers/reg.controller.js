@@ -14,23 +14,48 @@ exports.register = (req, res) => {
     })
     .then((dbRes) => {
       if (dbRes) {
-        
-      try {
-        sendMail({
-          email: `test@gmail.com`,
-          subject: `Regetration Success`,
-          message: `You have successfully regesteredfor DSC-Wow`,
-        }).then().catch(err => {if(err){res
-          .status(500)
-          .json({
-            message: 'Mail api problem detected',
-          });}});
+        try {
+          let today = new Date();
+          let dd = today.getDate();
+          let mm = today.getMonth() + 1;
 
-        res.status(200).json({message: 'User Registered Successfully please check for mail'});
-      
-      } catch (error) {
-        next(error);
-      }
+          let yyyy = today.getFullYear();
+          if (dd < 10) {
+            dd = '0' + dd;
+          }
+          if (mm < 10) {
+            mm = '0' + mm;
+          }
+          let date = dd + '/' + mm + '/' + yyyy;
+
+          sendMail(
+            {
+              email: `test@gmail.com`,
+              subject: `Regetration Success`,
+              message: `You have successfully regesteredfor DSC-Wow`,
+              // html: template,
+            },
+            {
+              username: req.body.username,
+              email: req.body.email,
+              date: date,
+            }
+          )
+            .then()
+            .catch((err) => {
+              if (err) {
+                return res.status(500).json({
+                  message: 'Mail api problem detected',
+                });
+              }
+            });
+
+          res.status(200).json({
+            message: 'User Registered Successfully please check for mail',
+          });
+        } catch (error) {
+          next(error);
+        }
 
         // res.send({
         //   message: 'User Registered Successfully please check for mail',
@@ -39,9 +64,10 @@ exports.register = (req, res) => {
     })
     .catch((err) => {
       if (err) {
-        return res(new errorres(`Something went wrong`, 500));
-        // res.statusCode = 500;
-        // res.send({ message: 'Something went wrong' });
+        // return next(new errorres(`Something went wrong`, 500));
+        res.statusCode = 500;
+        res.send({ message: 'Something went wrong' });
+        return;
       }
     });
 };

@@ -3,6 +3,7 @@ let bodyParser = require('body-parser');
 let cors = require('cors');
 const logger = require('morgan');
 const rateLimit = require('express-rate-limit');
+const errorHandler = require('./middlewares/error');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -24,6 +25,8 @@ app.use('/api/', apiLimiter);
 
 require('./routes/reg.routes')(app);
 require('./routes/contact.routes')(app);
+
+app.use(errorHandler);
 
 app.listen(PORT || 3000, function () {
   console.log('Server is running on Port: ' + (PORT || 3000));

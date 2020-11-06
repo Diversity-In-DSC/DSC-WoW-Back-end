@@ -21,9 +21,10 @@ exports.contactUs = (req, res) => {
     })
     .catch((err) => {
       if (err) {
-        return res(new errorres(`Something went wrong`, 500));
-        // res.statusCode = 500;
-        // res.send({ message: 'Something went wrong' });
+        // return next(new errorres(`Something went wrong`, 500));
+        res.statusCode = 500;
+        res.send({ message: 'Something went wrong' });
+        return;
       }
     });
 };

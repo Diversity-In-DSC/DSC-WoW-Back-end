@@ -1,4 +1,5 @@
 const firestore = require('../database');
+const errorres = require('../utils/errorres');
 
 const userCollection = firestore.db.collection('users');
 
@@ -8,7 +9,7 @@ exports.checkRegistered = async (req, res, next) => {
     .get();
 
   if (!userDoc.empty) {
-    return res(new errorres(`User already regestered`, 406));
+    return next(new errorres(`User already regestered`, 400));
     // res.statusCode = 406;
     // res.send({ message: 'User already present' });
   }
