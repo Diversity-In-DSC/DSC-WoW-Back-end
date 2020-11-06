@@ -1,21 +1,4 @@
-const firestore = require('../database');
-const sendMail = require('../utils/sendMail');
-
-const userCollection = firestore.db.collection('users');
-
-exports.register = (req, res) => {
-  const userRegisterRef = userCollection.doc();
-
-  userRegisterRef
-    .set({
-      username: req.body.username,
-      email: req.body.email,
-      createAt: Date.now(),
-    })
-    .then((dbRes) => {
-      if (dbRes) {
-        try {
-          const template = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -331,15 +314,11 @@ exports.register = (req, res) => {
                         >
                           <tr>
                             <td>
-                              <span class="header">${
-                                req.body.username
-                              }</span> <br />
+                              <span class="header">${username}</span> <br />
                             </td>
                             <td style="text-align: right; vertical-align: top">
-                              <span class="header">${
-                                req.body.email
-                              }</span><br />
-                              Regestration Date : ${Date.now()}<br /><br />
+                              <span class="header">${email}</span><br />
+                              Regestration Date : ${createAt}<br /><br />
                             </td>
                           </tr>
                         </table>
@@ -440,58 +419,3 @@ exports.register = (req, res) => {
     </table>
   </body>
 </html>
-`;
-
-          sendMail({
-            email: `test@gmail.com`,
-            subject: `Regetration Success`,
-            message: `You have successfully regesteredfor DSC-Wow`,
-            html: template,
-          })
-            .then()
-            .catch((err) => {
-              if (err) {
-                res.status(500).json({
-                  message: 'Mail api problem detected',
-                });
-              }
-            });
-
-          res.status(200).json({
-            message: 'User Registered Successfully please check for mail',
-          });
-        } catch (error) {
-          next(error);
-        }
-
-        // res.send({
-        //   message: 'User Registered Successfully please check for mail',
-        // });
-      }
-    })
-    .catch((err) => {
-      if (err) {
-        // return next(new errorres(`Something went wrong`, 500));
-        res.statusCode = 500;
-        res.send({ message: 'Something went wrong' });
-        return;
-      }
-    });
-};
-
-// Async example
-// exports.register = async (req, res) => {
-//   try {
-//     const userRegisterRef = userCollection.doc();
-
-//     const stat = await userRegisterRef.set({
-//       username: req.body.username,
-//       email: req.body.email,
-//       createAt: Date.now(),
-//     });
-
-//     res.send({ message: 'User Registered Successfully' });
-//   } catch (error) {
-//     next(error);
-//   }
-// };

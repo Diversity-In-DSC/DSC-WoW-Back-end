@@ -16,6 +16,7 @@ const sendMail = async (opts) => {
     to: opts.email,
     subject: opts.subject,
     text: opts.message,
+    html: opts.html,
   };
 
   const result = await transport.sendMail(info);

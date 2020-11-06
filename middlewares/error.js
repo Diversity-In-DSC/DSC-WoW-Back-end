@@ -1,4 +1,3 @@
-const { restart } = require('nodemon');
 const errorres = require('../utils/errorres');
 
 const errorHandler = (err, req, res, next) => {
