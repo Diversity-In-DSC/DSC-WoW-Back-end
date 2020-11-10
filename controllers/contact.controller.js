@@ -8,7 +8,7 @@ exports.contactUs = (req, res) => {
 
   contactUsRef
     .set({
-      username: req.body.username,
+      username: req.body.name,
       email: req.body.email,
       subject: req.body.subject,
       message: req.body.message,

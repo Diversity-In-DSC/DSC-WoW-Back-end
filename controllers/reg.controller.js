@@ -8,9 +8,10 @@ exports.register = (req, res) => {
 
   userRegisterRef
     .set({
-      username: req.body.username,
+      username: req.body.name,
       email: req.body.email,
-      createAt: Date.now(),
+      ref: req.body.ref,
+      createdAt: Date.now(),
     })
     .then((dbRes) => {
       if (dbRes) {
@@ -51,15 +52,11 @@ exports.register = (req, res) => {
             });
 
           res.status(200).json({
-            message: 'User Registered Successfully please check for mail',
+            message: 'User Registered Successfully',
           });
         } catch (error) {
           next(error);
         }
-
-        // res.send({
-        //   message: 'User Registered Successfully please check for mail',
-        // });
       }
     })
     .catch((err) => {

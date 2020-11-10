@@ -23,6 +23,10 @@ const apiLimiter = rateLimit({
 
 app.use('/api/', apiLimiter);
 
+app.get('/', (req, res) => {
+  res.send('We know what you are doing. :) If you see any bug do inform us.')
+})
+
 require('./routes/reg.routes')(app);
 require('./routes/contact.routes')(app);
 
