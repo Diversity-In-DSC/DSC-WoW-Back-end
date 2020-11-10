@@ -1,13 +1,17 @@
 const firestore = require('../database');
 const sendMail = require('../utils/sendMail');
+var randomstring = require("randomstring");
 
 const userCollection = firestore.db.collection('users');
 
 exports.register = (req, res) => {
   const userRegisterRef = userCollection.doc();
 
+  let uId = randomstring.generate(6);
+
   userRegisterRef
     .set({
+      userID: uId,
       username: req.body.name,
       email: req.body.email,
       ref: req.body.ref,
@@ -53,6 +57,7 @@ exports.register = (req, res) => {
 
           res.status(200).json({
             message: 'User Registered Successfully',
+            referralLink: `https://dscwow.tech?ref=${uId}`
           });
         } catch (error) {
           next(error);
